@@ -1,11 +1,9 @@
 <template>
-  <div>
-    Olá mundo
-  </div>
+  <div></div>
 </template>
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Toolbar',
 }
 </script>
