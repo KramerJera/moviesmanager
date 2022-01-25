@@ -24,6 +24,14 @@ const routes = new Router({
       path: '/entrar',
       name: 'login',
       component: () => import('@/views/Login.vue'),
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/Dashboard.vue'),
+      meta: {
+        requiresAuth: true,
+      }
     }
   ],
 });

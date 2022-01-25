@@ -10,6 +10,7 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex';
 import Toolbar from './components/Toolbar.vue';
 
 export default {
@@ -17,5 +18,19 @@ export default {
   components: {
     Toolbar,
   },
+
+  computed: {
+    ...mapGetters([
+      'currentUser',
+    ]),
+  },
+
+  watch: {
+    currentUser(currentUser) {
+      if (currentUser) {
+        this.$router.push('/dashboard')
+      }
+    }
+  }
 };
 </script>

@@ -22,6 +22,9 @@ export default {
   methods: {
     createUser(user) {
       console.log(user)
+      // fazer o registro e redirecionar para o login
+      // this.$router.push({ name: 'login' })
+      // ou pegar os erros
     }
   }
 };
