@@ -1,11 +1,15 @@
+import Accounts from '@/api/resources/accounts'
+
 const state = {
   user: null,
   hasSession: false,
+  token: '',
 }
 
 const getters = {
   currentUser: () => (state.user),
   hasSession: () => (state.hasSession),
+  getToken: () => (state.getToken),
 }
 
 const actions = {
@@ -14,6 +18,16 @@ const actions = {
     if (payload) {
       commit('setSession'. true)
     }
+  },
+  addToken({ commit }, payload) {
+    commit('setToken', payload)
+  },
+  createUser({ commit }, payload) {
+    Accounts.signup(payload).then((response) => {
+      console.log(response)
+      commit('setUser', payload),
+      commit('setSession', payload)
+    })
   }
 }
 
@@ -25,6 +39,10 @@ const mutations = {
   setSession($state, payload) {
     const stateCopy = $state;
     stateCopy.hasSession = payload;
+  },
+  setToken($state, payload) {
+    const stateCopy = $state;
+    stateCopy.token = payload;
   }
 }
 

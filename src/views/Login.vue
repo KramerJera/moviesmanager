@@ -26,7 +26,7 @@ export default {
     login(user) {
       console.log(user)
       // Fazer o login
-      // Salvar no estato
+      // Salvar no estado
       // this.addUser({
       //  name: data.user.name,
       //  email: data.user.email

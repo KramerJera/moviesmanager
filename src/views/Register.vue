@@ -6,13 +6,14 @@
     >
       <v-card-title class="pa-0 mb-6 text-center">Criar sua conta</v-card-title>
       <form-register 
-        @register="createUser"
+        @register="create"
       />
     </v-card>
   </v-container>
 </template>
 
 <script>
+import { mapActions } from 'vuex';
 import FormRegister from '../components/FormRegister.vue';
 export default {
   name: "Register",
@@ -20,8 +21,10 @@ export default {
     FormRegister
   },
   methods: {
-    createUser(user) {
+    ...mapActions(['createUser']),
+    create(user) {
       console.log(user)
+      this.createUser(user)
       // fazer o registro e redirecionar para o login
       // this.$router.push({ name: 'login' })
       // ou pegar os erros

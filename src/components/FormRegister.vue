@@ -62,6 +62,7 @@ export default {
       email: '',
       password: '',
       passwordConfirmation: '',
+      birthdate: '06/09/1994',
       showPassword: false,
       showPasswordConfirmation: false,
       rules: {
@@ -81,7 +82,9 @@ export default {
         const userRegister = {
           name: this.name,
           email: this.email,
-          password: this.password
+          password: this.password,
+          password_confirmation: this.passwordConfirmation,
+          birthdate: this.birthdate
         }
 
         this.$emit('register', userRegister)
