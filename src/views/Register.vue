@@ -23,7 +23,6 @@ export default {
   methods: {
     ...mapActions(['createUser']),
     create(user) {
-      console.log(user)
       this.createUser(user)
       // fazer o registro e redirecionar para o login
       // this.$router.push({ name: 'login' })

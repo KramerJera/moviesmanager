@@ -17,14 +17,14 @@ import FormLogin from '../components/FormLogin.vue'
 import { mapActions } from 'vuex'
 
 export default {
-  name: "Register",
+  name: "Login",
   components: {
     FormLogin
   },
   methods: {
-    ...mapActions(['addUser']),
+    ...mapActions(['loginUser']),
     login(user) {
-      console.log(user)
+      this.loginUser(user)
       // Fazer o login
       // Salvar no estado
       // this.addUser({
