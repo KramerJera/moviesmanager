@@ -25,13 +25,13 @@ const actions = {
   createUser({ dispatch }, payload) {
     Accounts.signup(payload).then((response) => {
       dispatch('addUser', payload),
-      dispatch('addToken', response.token)
+      dispatch('addToken', response.csrf)
     })
   },
   loginUser({ dispatch }, payload) {
     Accounts.signin(payload).then((response) => {
       dispatch('addUser', payload),
-      dispatch('addToken', response.token)
+      dispatch('addToken', response.csrf)
     })
   }
 }
