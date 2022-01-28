@@ -1,11 +1,15 @@
 import Profiles from '@/api/resources/profiles'
 
 const state = {
-  profiles: [],
+  accountProfiles: [],
+  selectedProfile: '',
 }
 
 const getters = {
-  getProfiles: () => (state.profiles),
+  getProfiles: () => (state.accountProfiles),
+  getSelectedProfile: () => (state.selectedProfile),
+  getLocalStorageProfileName: () => (JSON.parse(window.localStorage.getItem('PROFILE_NAME'))),
+  getLocalStorageProfileId: () => (JSON.parse(window.localStorage.getItem('PROFILE_ID'))),
 }
 
 const actions = {
@@ -26,17 +30,26 @@ const actions = {
       console.log(response)
       dispatch('listProfiles', payload)
     })
+  },
+  selectProfile({ commit }, payload) {
+    commit('setSelectedProfile', payload)
   }
 }
 
 const mutations = {
   setProfiles($state, payload) {
     const stateCopy = $state;
-    stateCopy.profiles = stateCopy.profiles.concat(payload);
+    stateCopy.accountProfiles = stateCopy.accountProfiles.concat(payload);
   },
   clearProfiles($state) {
     const stateCopy = $state;
-    stateCopy.profiles = [];
+    stateCopy.accountProfiles = [];
+  },
+  setSelectedProfile($state, payload) {
+    const stateCopy = $state;
+    stateCopy.selectedProfile = payload;
+    window.localStorage.setItem('PROFILE_NAME', JSON.stringify(payload.name));
+    window.localStorage.setItem('PROFILE_ID', JSON.stringify(payload.id));
   }
 }
 

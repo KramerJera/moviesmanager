@@ -73,15 +73,15 @@ export default {
         this.canCreateProfile = (this.profiles.length < 4 ? true : false);
       }
     }
-
   },
   mounted() {
     this.listProfiles();
   },
   methods: {
-    ...mapActions(['listProfiles', 'createProfile', 'deleteProfile']),
+    ...mapActions(['listProfiles', 'createProfile', 'deleteProfile', 'selectProfile']),
     accessProfile(profile) {
-      console.log(profile.id)
+      this.selectProfile(profile)
+      this.$router.push({ name: 'movies' })
     },
     createNewProfile(profile) {
       var newProfile = {

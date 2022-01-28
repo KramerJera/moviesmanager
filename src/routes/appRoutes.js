@@ -32,7 +32,15 @@ const routes = new Router({
       meta: {
         requiresAuth: true,
       }
-    }
+    },
+    {
+      path: '/filmes',
+      name: 'movies',
+      component: () => import('@/views/Movies.vue'),
+      meta: {
+        requiresAuth: true,
+      }
+    },
   ],
 });
 
