@@ -2,14 +2,12 @@ import Profiles from '@/api/resources/profiles'
 
 const state = {
   accountProfiles: [],
-  selectedProfile: '',
+  currentProfile: []
 }
 
 const getters = {
   getProfiles: () => (state.accountProfiles),
-  getSelectedProfile: () => (state.selectedProfile),
-  getLocalStorageProfileName: () => (JSON.parse(window.localStorage.getItem('PROFILE_NAME'))),
-  getLocalStorageProfileId: () => (JSON.parse(window.localStorage.getItem('PROFILE_ID'))),
+  getCurrentProfile: () => (state.currentProfile),
 }
 
 const actions = {
@@ -31,8 +29,10 @@ const actions = {
       dispatch('listProfiles', payload)
     })
   },
-  selectProfile({ commit }, payload) {
-    commit('setSelectedProfile', payload)
+  getProfileInfos({ commit }, payload) {
+    Profiles.getProfile(payload).then((response) => {
+      commit('setCurrentProfile', response)
+    })
   }
 }
 
@@ -45,11 +45,9 @@ const mutations = {
     const stateCopy = $state;
     stateCopy.accountProfiles = [];
   },
-  setSelectedProfile($state, payload) {
+  setCurrentProfile($state, payload) {
     const stateCopy = $state;
-    stateCopy.selectedProfile = payload;
-    window.localStorage.setItem('PROFILE_NAME', JSON.stringify(payload.name));
-    window.localStorage.setItem('PROFILE_ID', JSON.stringify(payload.id));
+    stateCopy.currentProfile = payload;
   }
 }
 

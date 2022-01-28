@@ -34,7 +34,7 @@ const routes = new Router({
       }
     },
     {
-      path: '/filmes',
+      path: '/perfil/:profileId/filmes',
       name: 'movies',
       component: () => import('@/views/Movies.vue'),
       meta: {

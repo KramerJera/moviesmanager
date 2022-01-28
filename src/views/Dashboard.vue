@@ -78,10 +78,9 @@ export default {
     this.listProfiles();
   },
   methods: {
-    ...mapActions(['listProfiles', 'createProfile', 'deleteProfile', 'selectProfile']),
+    ...mapActions(['listProfiles', 'createProfile', 'deleteProfile']),
     accessProfile(profile) {
-      this.selectProfile(profile)
-      this.$router.push({ name: 'movies' })
+      this.$router.push({ name: 'movies', params: { profileId: profile.id } })
     },
     createNewProfile(profile) {
       var newProfile = {
