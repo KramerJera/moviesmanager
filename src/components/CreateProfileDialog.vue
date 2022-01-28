@@ -58,7 +58,7 @@
 
 <script>
 export default {
-  name: 'ProfileDialog',
+  name: 'CreateProfileDialog',
   props: {
     canCreateProfile: Boolean,
   },

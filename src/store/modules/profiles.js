@@ -20,6 +20,12 @@ const actions = {
       console.log(response)
       dispatch('listProfiles', payload)
     })
+  },
+  deleteProfile({ dispatch }, payload) {
+    Profiles.deleteProfile(payload).then((response) => {
+      console.log(response)
+      dispatch('listProfiles', payload)
+    })
   }
 }
 

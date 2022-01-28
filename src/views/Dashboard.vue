@@ -14,43 +14,45 @@
     <v-row
       no-gutters 
       fill-height
+      v-for="profile in profiles"
+      :key="profile.id"
     >
-      <v-col
-        md="4"
-        lg="3"
-        class="ml-4 mb-4"
-        v-for="profile in profiles"
-        :key="profile.id"
-      >
-        <v-btn
-          elevation="0"
-          class="mb-8"
-          outlined
-          @click="accessProfile(profile)"
-        > 
-          <v-icon left>
-            mdi-account
-          </v-icon>
-          {{ profile.name }} 
-        </v-btn>
-      </v-col>
-      <profile-dialog
-        :canCreateProfile="canCreateProfile"
-        @createProfile="createNewProfile"
-      ></profile-dialog>
+      <v-btn
+        elevation="0"
+        class="mb-8"
+        outlined
+        @click="accessProfile(profile)"
+      > 
+        <v-icon left>
+          mdi-account
+        </v-icon>
+        {{ profile.name }} 
+      </v-btn>
+      
+      <delete-profile-dialog
+        :profile="profile"
+        @deleteProfile="deleteUserProfile"
+      ></delete-profile-dialog>
     </v-row>
+
+    <create-profile-dialog
+      :canCreateProfile="canCreateProfile"
+      @createProfile="createNewProfile"
+    ></create-profile-dialog>
 
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import ProfileDialog from '@/components/ProfileDialog.vue'
+import CreateProfileDialog from '@/components/CreateProfileDialog.vue'
+import DeleteProfileDialog from '@/components/DeleteProfileDialog.vue'
 
 export default {
   name: 'Dashboard',
   components: {
-    ProfileDialog
+    CreateProfileDialog,
+    DeleteProfileDialog
   },
   data() {
     return {
@@ -77,7 +79,7 @@ export default {
     this.listProfiles();
   },
   methods: {
-    ...mapActions(['listProfiles', 'createProfile']),
+    ...mapActions(['listProfiles', 'createProfile', 'deleteProfile']),
     accessProfile(profile) {
       console.log(profile.id)
     },
@@ -86,6 +88,13 @@ export default {
         name: profile
       };
       this.createProfile(newProfile);
+    },
+    deleteUserProfile(profile) {
+      var profileToDelete = {
+        id: profile.id
+      }
+      console.log(profileToDelete)
+      this.deleteProfile(profileToDelete)
     }
   }
 }
