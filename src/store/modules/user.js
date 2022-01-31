@@ -44,6 +44,7 @@ const mutations = {
   setSession($state, payload) {
     const stateCopy = $state;
     stateCopy.hasSession = payload;
+    window.localStorage.setItem('HAS_SESSION', JSON.stringify(payload));
   },
   setToken($state, payload) {
     const stateCopy = $state;

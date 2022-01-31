@@ -9,7 +9,7 @@ export default {
     movies: Array
   },
   mounted () {
-    console.log(this.movies)
+    
   }
 }
 </script>

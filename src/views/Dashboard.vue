@@ -92,7 +92,6 @@ export default {
       var profileToDelete = {
         id: profile.id
       }
-      console.log(profileToDelete)
       this.deleteProfile(profileToDelete)
     }
   }

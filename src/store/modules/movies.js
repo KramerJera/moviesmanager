@@ -1,11 +1,13 @@
 import Movies from '@/api/resources/movies'
 
 const state = {
-  movies: []
+  movies: [],
+  searchResultMovies: []
 }
 
 const getters = {
-  getMovies: () => (state.movies)
+  getMovies: () => (state.movies),
+  getSearchResults: () => (state.searchResultMovies),
 }
 
 const actions = {
@@ -14,7 +16,13 @@ const actions = {
     Movies.listMovies(payload).then((response) => {
       commit('setProfiles', response)
     })
-  }
+  },
+  search({ commit }, payload) {
+    commit('clearSearchResults')
+    Movies.searchMovie(payload).then((response) => {
+      commit('setSearchResult', response)
+    })
+  },
 }
 
 const mutations = {
@@ -25,6 +33,14 @@ const mutations = {
   clearMovies($state) {
     const stateCopy = $state;
     stateCopy.movies = [];
+  },
+  clearSearchResults($state) {
+    const stateCopy = $state;
+    stateCopy.searchResultMovies = [];
+  },
+  setSearchResult($state, payload) {
+    const stateCopy = $state;
+    stateCopy.searchResultMovies = stateCopy.searchResultMovies.concat(payload);
   },
 }
 
