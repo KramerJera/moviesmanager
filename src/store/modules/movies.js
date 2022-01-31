@@ -14,7 +14,7 @@ const actions = {
   listMovies({ commit }, payload) {
     commit('clearMovies')
     Movies.listMovies(payload).then((response) => {
-      commit('setProfiles', response)
+      commit('setMovies', response)
     })
   },
   search({ commit }, payload) {
@@ -23,6 +23,15 @@ const actions = {
       commit('setSearchResult', response)
     })
   },
+  addMovieToWatchlist({ dispatch }, payload) {
+    Movies.addToWatchlist(payload).then((response) => {
+      console.log(response)
+      var params = {
+        profileId: payload.profile_id
+      }
+      dispatch('listMovies', params)
+    })
+  }
 }
 
 const mutations = {

@@ -9,7 +9,6 @@ export default {
     movies: Array
   },
   mounted () {
-    
   }
 }
 </script>

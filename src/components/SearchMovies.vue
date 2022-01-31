@@ -41,10 +41,14 @@
                   </v-card-text>
 
                   <v-card-actions>
-                    <v-btn text>
+                    <v-btn text
+                      @click="markAsWatched(movie)"
+                    >
                       Já assisti
                     </v-btn>
-                    <v-btn text>
+                    <v-btn text
+                      @click="addToWatchlist(movie)"
+                    >
                       Quero assistir
                     </v-btn>
                   </v-card-actions>
@@ -79,13 +83,27 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['search']),
+    ...mapActions(['search', 'addMovieToWatchlist']),
     searchmovie() {
       var params = {
         profileId: this.profileId,
         searchTerm: this.name,
       }
       this.search(params)
+    },
+    addToWatchlist(movie) {
+      var params = {
+        profile_id: this.$route.params.profileId,
+        title: movie.title,
+        poster: movie.poster_path,
+        description: movie.overview,
+        watchlist: true,
+        watched: false,
+      }
+      this.addMovieToWatchlist(params)
+    },
+    markAsWatched(movie) {
+      console.log(movie)
     }
   }
 }

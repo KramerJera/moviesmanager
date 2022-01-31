@@ -28,6 +28,8 @@
           <movies-list
             :movies="movies"
           ></movies-list>
+
+          {{ movies }}
         </v-tab-item>
 
         <v-tab href="#watched">
@@ -56,7 +58,7 @@ export default {
     return {
       profileName: '',
       profileId: this.$route.params.profileId,
-      movies: [],
+      movies: '',
     }
   },
   computed: {
