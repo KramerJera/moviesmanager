@@ -18,25 +18,30 @@
           Todos os filmes
         </v-tab>
         <v-tab-item value="allmovies">
-          <search-movies></search-movies>
+          <search-movies
+            @markAsWatched='markAsWatched'
+          ></search-movies>
         </v-tab-item>
 
         <v-tab href="#watchlist">
           Sua lista
         </v-tab>
         <v-tab-item value="watchlist">
-          <movies-list
-            :movies="movies"
-          ></movies-list>
-
-          {{ movies }}
+          <watchlist
+            :watchlist="watchlist"
+            @removeMovieFromList='removeMovieFromList'
+            @markAsWatched='markAsWatched'
+          ></watchlist>
         </v-tab-item>
 
         <v-tab href="#watched">
           Assistidos
         </v-tab>
         <v-tab-item value="watched">
-          Filmes já assistidos
+          <watched-movies
+            :watchedlist="watchedlist"
+            @removeMovieFromList='removeMovieFromList'
+          ></watched-movies>
         </v-tab-item>
       </v-tabs>
     </v-row>
@@ -45,51 +50,62 @@
 
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import MoviesList from '@/components/MoviesList.vue'
+import Watchlist from '@/components/Watchlist.vue'
 import SearchMovies from '@/components/SearchMovies.vue'
+import WatchedMovies from '@/components/WatchedMovies.vue'
 
 export default {
   name: 'Movies',
   components: {
-    MoviesList,
+    Watchlist,
     SearchMovies,
+    WatchedMovies
   },
   data () {
     return {
       profileName: '',
       profileId: this.$route.params.profileId,
-      movies: '',
+      watchlist: '',
+      watchedlist: '',
     }
   },
   computed: {
-    ...mapGetters(['getMovies', 'getCurrentProfile']),
+    ...mapGetters(['getCurrentProfile', 'getWatchlist', 'getWatchedlist']),
   },
   watch: {
-    getMovies(value) {
-      if (value) {
-        this.movies = value;
-      }
-    },
     getCurrentProfile(value) {
       if (value) {
         this.profileName = value.name;
+      }
+    },
+    getWatchlist(value) {
+      if (value) {
+        this.watchlist = value;
+      }
+    },
+    getWatchedlist(value) {
+      if (value) {
+        this.watchedlist = value;
       }
     }
   },
   mounted () {
     var params = {
-        profileId: this.profileId,
+        profile_id: this.profileId,
     }
-    this.listMovies(params)
+    this.getWatchlistMovies(params)
+    this.getWatchedlistMovies(params)
     this.getProfileInfos(params)
   },
   methods: {
-    ...mapActions(['listMovies', 'getProfileInfos']),
-    listProfileMovies() {
-      var params = {
-        profileId: this.profileId,
-      }
-      this.listMovies(params)
+    ...mapActions(['getWatchlistMovies', 'getWatchedlistMovies', 'getProfileInfos', 'removeMovie', 'markMovieAsWatched']),
+    removeMovieFromList(movie) {
+      this.removeMovie(movie)
+    },
+    markAsWatched(movie) {
+      movie.watched = true
+      movie.watchlist = false
+      this.markMovieAsWatched(movie)
     }
   }
 }

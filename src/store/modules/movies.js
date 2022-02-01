@@ -1,20 +1,28 @@
 import Movies from '@/api/resources/movies'
 
 const state = {
-  movies: [],
+  watchlist: [],
+  watchedList: [],
   searchResultMovies: []
 }
 
 const getters = {
-  getMovies: () => (state.movies),
+  getWatchlist: () => (state.watchlist),
+  getWatchedlist: () => (state.watchedList),
   getSearchResults: () => (state.searchResultMovies),
 }
 
 const actions = {
-  listMovies({ commit }, payload) {
-    commit('clearMovies')
-    Movies.listMovies(payload).then((response) => {
-      commit('setMovies', response)
+  getWatchlistMovies({ commit }, payload) {
+    commit('clearWatchList')
+    Movies.getWatchlist(payload).then((response) => {
+      commit('setWatchlist', response)
+    })
+  },
+  getWatchedlistMovies({ commit }, payload) {
+    commit('clearWatchedlist')
+    Movies.getWatchedlist(payload).then((response) => {
+      commit('setWatchedlist', response)
     })
   },
   search({ commit }, payload) {
@@ -26,22 +34,42 @@ const actions = {
   addMovieToWatchlist({ dispatch }, payload) {
     Movies.addToWatchlist(payload).then((response) => {
       console.log(response)
-      var params = {
-        profileId: payload.profile_id
-      }
-      dispatch('listMovies', params)
+      dispatch('getWatchlistMovies', payload)
+      dispatch('getWatchedlistMovies', payload)
+    })
+  },
+  removeMovie({ dispatch }, payload) {
+    Movies.removeMovie(payload).then((response) => {
+      console.log(response)
+      dispatch('getWatchlistMovies', payload)
+      dispatch('getWatchedlistMovies', payload)
+    })
+  },
+  markMovieAsWatched({ dispatch }, payload) {
+    Movies.updateMovie(payload).then((response) => {
+      console.log(response)
+      dispatch('getWatchedlistMovies', payload)
+      dispatch('getWatchlistMovies', payload)
     })
   }
 }
 
 const mutations = {
-  setMovies($state, payload) {
+  setWatchlist($state, payload) {
     const stateCopy = $state;
-    stateCopy.movies = stateCopy.movies.concat(payload);
+    stateCopy.watchlist = stateCopy.watchlist.concat(payload);
   },
-  clearMovies($state) {
+  setWatchedlist($state, payload) {
     const stateCopy = $state;
-    stateCopy.movies = [];
+    stateCopy.watchedList = stateCopy.watchedList.concat(payload);
+  },
+  clearWatchList($state) {
+    const stateCopy = $state;
+    stateCopy.watchlist = [];
+  },
+  clearWatchedlist($state) {
+    const stateCopy = $state;
+    stateCopy.watchedList = [];
   },
   clearSearchResults($state) {
     const stateCopy = $state;

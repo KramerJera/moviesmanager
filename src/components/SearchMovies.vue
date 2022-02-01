@@ -33,11 +33,11 @@
                   </v-card-title>
 
                   <v-img
-                    :src= "movie.poster_path"
+                    :src= "movie.poster"
                   ></v-img>
 
                   <v-card-text>
-                    {{ movie.overview }}
+                    {{ movie.description }}
                   </v-card-text>
 
                   <v-card-actions>
@@ -86,8 +86,8 @@ export default {
     ...mapActions(['search', 'addMovieToWatchlist']),
     searchmovie() {
       var params = {
-        profileId: this.profileId,
-        searchTerm: this.name,
+        profile_id: this.profileId,
+        search_term: this.name,
       }
       this.search(params)
     },
@@ -95,15 +95,15 @@ export default {
       var params = {
         profile_id: this.$route.params.profileId,
         title: movie.title,
-        poster: movie.poster_path,
-        description: movie.overview,
+        poster: movie.poster,
+        description: movie.description,
         watchlist: true,
         watched: false,
       }
       this.addMovieToWatchlist(params)
     },
     markAsWatched(movie) {
-      console.log(movie)
+      this.$emit('markAsWatched', movie)
     }
   }
 }
