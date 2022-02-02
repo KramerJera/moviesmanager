@@ -19,7 +19,8 @@
         </v-tab>
         <v-tab-item value="allmovies">
           <search-movies
-            @markAsWatched='markAsWatched'
+            @addToWatchlist='addToWatchlist'
+            @addToWatchedlist='addToWatchedlist'
           ></search-movies>
         </v-tab-item>
 
@@ -98,7 +99,21 @@ export default {
     this.getProfileInfos(params)
   },
   methods: {
-    ...mapActions(['getWatchlistMovies', 'getWatchedlistMovies', 'getProfileInfos', 'removeMovie', 'markMovieAsWatched']),
+    ...mapActions(['getWatchlistMovies', 'getWatchedlistMovies', 'getProfileInfos', 'removeMovie', 'markMovieAsWatched', 'addMovieToWatchlist']),
+    addToWatchlist(movie) {
+      movie.profile_id = this.profileId
+      movie.watched = false
+      movie.watchlist = true
+
+      this.addMovieToWatchlist(movie)
+    },
+    addToWatchedlist(movie) {
+      movie.profile_id = this.profileId
+      movie.watched = true
+      movie.watchlist = false
+
+      this.addMovieToWatchlist(movie)
+    },
     removeMovieFromList(movie) {
       this.removeMovie(movie)
     },

@@ -11,6 +11,8 @@
           <v-text-field
             v-model="name"
             label="Nome do filme"
+            @input="searchmovie"
+            @change="searchmovie"
             required
           ></v-text-field>
           
@@ -42,7 +44,7 @@
 
                   <v-card-actions>
                     <v-btn text
-                      @click="markAsWatched(movie)"
+                      @click="addToWatchedlist(movie)"
                     >
                       Já assisti
                     </v-btn>
@@ -83,7 +85,7 @@ export default {
     },
   },
   methods: {
-    ...mapActions(['search', 'addMovieToWatchlist']),
+    ...mapActions(['search']),
     searchmovie() {
       var params = {
         profile_id: this.profileId,
@@ -92,18 +94,10 @@ export default {
       this.search(params)
     },
     addToWatchlist(movie) {
-      var params = {
-        profile_id: this.$route.params.profileId,
-        title: movie.title,
-        poster: movie.poster,
-        description: movie.description,
-        watchlist: true,
-        watched: false,
-      }
-      this.addMovieToWatchlist(params)
+      this.$emit('addToWatchlist', movie)
     },
-    markAsWatched(movie) {
-      this.$emit('markAsWatched', movie)
+    addToWatchedlist(movie) {
+      this.$emit('addToWatchedlist', movie)
     }
   }
 }

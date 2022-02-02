@@ -46,7 +46,7 @@ axiosInstance.interceptors.response.use(null, error => {
 
   if (error.response && error.response.config && error.response.status === 401) {
     // In case 401 is caused by expired access cookie - we'll do refresh request
-    return axiosInstance.post('/refresh', {}, { headers: { 'X-CSRF-TOKEN': requestToken } })
+    return axiosInstance.post('/refresh', { headers: { 'X-CSRF-TOKEN': requestToken } })
       .then(response => {
         window.localStorage.setItem('ACCESS_TOKEN', JSON.stringify(response.data.csrf));
         window.localStorage.setItem('HAS_SESSION', JSON.stringify(true));
